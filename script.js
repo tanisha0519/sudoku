@@ -1,124 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sudoku Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 20px;
+const puzzle = [
+[8,0,0,2,0,0,4,0,0],
+[1,0,4,3,0,0,0,0,5],
+[0,0,0,0,0,5,0,2,0],
+[0,8,0,0,6,0,0,1,2],
+[0,0,7,0,0,0,5,0,0],
+[6,4,0,0,0,0,0,8,0],
+[0,5,0,4,0,0,0,0,0],
+[3,0,0,0,0,2,9,0,7],
+[0,0,6,0,0,8,0,0,3]
+];
+const solution = [
+ [8,3,5,2,7,1,4,9,6],
+[1,2,4,3,6,9,8,7,5],
+[7,6,9,8,4,5,3,2,1],
+[5,8,3,7,9,4,6,1,2],
+[2,9,7,1,8,6,5,3,4],
+[6,4,1,5,2,3,7,8,9],
+[9,5,2,4,3,7,1,6,8],
+[3,1,8,6,5,2,9,4,7],
+[4,7,6,9,1,8,2,5,3]
+];
+function createBoard(){
+    const board = document.getElementById("board");
+    board.innerHTML = "";
+    for(let r = 0; r < 9; r++){
+        for(let c = 0; c < 9; c++){
+            let cell = document.createElement("input");
+            cell.maxLength = 1;
+            cell.id = r + "-" + c;
+            cell.addEventListener("input", function () {
+                this.value = this.value.replace(/[^1-9]/g, "");
+            });
+            if(puzzle[r][c] != 0){
+                cell.value = puzzle[r][c];
+                cell.disabled = true;
+                cell.classList.add("fixed");
+            }
+            board.appendChild(cell);
+        } 
+    }
+}
+function checkSolution(){
+    let correct=true;
+    for(let r=0;r<9;r++){
+        for(let c=0;c<9;c++){
+            let cell=document.getElementById(r+"-"+c);
+            if(Number(cell.value)!=solution[r][c]){
+                correct=false;
+            }
         }
+    }
+    if(correct){
+        document.getElementById("message").innerHTML=" 😍 You solved it !!!!......";
+    }else{
+        document.getElementById("message").innerHTML=" Oopss...you are a bit incorrect!!... 😶‍🌫️ ";
+    }
 
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
+}
+function showSolution(){
+    for(let r=0;r<9;r++){
+        for(let c=0;c<9;c++){
+            let cell=document.getElementById(r+"-"+c);
+            cell.value=solution[r][c];
         }
-
-        /* 9x9 Grid Layout */
-        #board {
-            display: grid;
-            grid-template-columns: repeat(9, 45px);
-            grid-template-rows: repeat(9, 45px);
-            gap: 1px;
-            background-color: #333;
-            border: 3px solid #333;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        /* Individual cells styling */
-        #board input {
-            width: 45px;
-            height: 45px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            outline: none;
-            background-color: #fff;
-            box-sizing: border-box;
-        }
-
-        /* Visual separation for 3x3 subgrids */
-        #board input:nth-child(3n) {
-            border-right: 2px solid #333;
-        }
-        #board input:nth-child(9n) {
-            border-right: none;
-        }
-        #board input:nth-child(n+19):nth-child(-n+27),
-        #board input:nth-child(n+46):nth-child(-n+54) {
-            border-bottom: 2px solid #333;
-        }
-
-        /* Fixed numbers provided by the puzzle */
-        .fixed {
-            background-color: #e2e8f0 !important;
-            color: #4a5568;
-            cursor: not-allowed;
-        }
-
-        /* Controls wrapper */
-        .controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-check { background-color: #4caf50; color: white; }
-        .btn-check:hover { background-color: #43a047; }
-
-        .btn-solve { background-color: #ff9800; color: white; }
-        .btn-solve:hover { background-color: #fb8c00; }
-
-        .btn-reset { background-color: #2196f3; color: white; }
-        .btn-reset:hover { background-color: #1e88e5; }
-
-        /* Feedback text */
-        #message {
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            min-height: 27px;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Sudoku</h1>
-    
-    <!-- Game Board -->
-    <div id="board"></div>
-
-    <!-- Status Message -->
-    <div id="message"></div>
-
-    <!-- Interactive Buttons -->
-    <div class="controls">
-        <button class="btn-check" onclick="checkSolution()">Check</button>
-        <button class="btn-solve" onclick="showSolution()">Reveal Solution</button>
-        <button class="btn-reset" onclick="newGame()">New Game</button>
-    </div>
-
-    <!-- Inject your JS script below or link it via src -->
-    <script>
-        // Paste your JavaScript code here if running from a single file
-    </script>
-</body>
-</html>
+    }
+}
+function newGame(){
+    createBoard();
+    document.getElementById("message").innerHTML="";
+}
+createBoard();
