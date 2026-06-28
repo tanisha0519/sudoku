@@ -2,16 +2,16 @@ body{
     margin:0;
     padding:0;
     background:yellow;
-    font-family:Arial; 
-    display:flex; 
-    justify-content:center; 
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
     align-items:center;
     min-height:100vh;
 }
 .container{
     text-align:center;
 }
-#board{ 
+#board{
     display:grid;
     grid-template-columns:repeat(9,40px);
     grid-template-rows:repeat(9,40px);
