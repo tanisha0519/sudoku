@@ -1,4 +1,3 @@
-// A database storing multiple puzzle variants and their respective solutions
 const puzzleDatabase = [
     {
         // Puzzle 1 (Your original puzzle)
@@ -40,18 +39,13 @@ const puzzleDatabase = [
         ]
     }
 ];
-
-// Global placeholders to store the active game data
 let currentPuzzle = [];
 let currentSolution = [];
-
-// Helper function to pick a random puzzle set from the database
 function selectRandomPuzzle() {
     const randomIndex = Math.floor(Math.random() * puzzleDatabase.length);
     currentPuzzle = puzzleDatabase[randomIndex].puzzle;
     currentSolution = puzzleDatabase[randomIndex].solution;
 }
-
 function createBoard(){
     const board = document.getElementById("board");
     board.innerHTML = "";
@@ -63,7 +57,6 @@ function createBoard(){
             cell.addEventListener("input", function () {
                 this.value = this.value.replace(/[^1-9]/g, "");
             });
-            // Reads from the dynamically selected random puzzle
             if(currentPuzzle[r][c] != 0){
                 cell.value = currentPuzzle[r][c];
                 cell.disabled = true;
@@ -73,13 +66,11 @@ function createBoard(){
         }
     }
 }
-
 function checkSolution(){
     let correct = true;
     for(let r = 0; r < 9; r++){
         for(let c = 0; c < 9; c++){
             let cell = document.getElementById(r + "-" + c);
-            // Validates inputs against the dynamically selected random solution
             if(Number(cell.value) != currentSolution[r][c]){
                 correct = false;
             }
@@ -91,7 +82,6 @@ function checkSolution(){
         document.getElementById("message").innerHTML = " Oopss...you are a bit incorrect!!... 😶‍🌫️ ";
     }
 }
-
 function showSolution(){
     for(let r = 0; r < 9; r++){
         for(let c = 0; c < 9; c++){
@@ -100,14 +90,10 @@ function showSolution(){
         }
     }
 }
-
-// Generates a brand new random game setup when clicked
 function newGame(){
     selectRandomPuzzle(); 
     createBoard();
     document.getElementById("message").innerHTML = "";
 }
-
-// Initial game boot initialization
-selectRandomPuzzle();
+slectRandomPuzzle();
 createBoard();
