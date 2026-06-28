@@ -74,4 +74,8 @@ function showSolution(){
         }
     }
 }
-newGame();
+function newGame(){
+    createBoard();
+    document.getElementById("message").innerHTML="";
+}
+createBoard();
