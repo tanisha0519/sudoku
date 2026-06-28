@@ -37,7 +37,7 @@ function createBoard(){
                 cell.classList.add("fixed");
             }
             board.appendChild(cell);
-        }
+        } 
     }
 }
 function checkSolution(){
