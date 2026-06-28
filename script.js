@@ -1,4 +1,3 @@
-// A database storing multiple puzzle variants and their respective solutions
 const puzzleDatabase = [
     {
         // Puzzle 1 (Your original puzzle)
@@ -14,7 +13,6 @@ const puzzleDatabase = [
         ]
     },
     {
-        // Puzzle 2
         puzzle: [
             [0,0,0,2,6,0,7,0,1], [6,8,0,0,7,0,0,9,0], [1,9,0,0,0,4,5,0,0],
             [8,2,0,1,0,0,0,4,0], [0,0,4,6,0,2,9,0,0], [0,5,0,0,0,3,0,2,8],
@@ -27,7 +25,6 @@ const puzzleDatabase = [
         ]
     },
     {
-        // Puzzle 3
         puzzle: [
             [0,0,0,6,0,2,0,0,0], [4,0,0,0,0,0,0,0,1], [0,8,5,0,0,0,9,2,0],
             [0,3,8,0,0,0,4,6,0], [0,0,0,1,0,8,0,0,0], [0,2,4,0,0,0,1,3,0],
@@ -40,12 +37,8 @@ const puzzleDatabase = [
         ]
     }
 ];
-
-// Global placeholders to store the active game data
 let currentPuzzle = [];
 let currentSolution = [];
-
-// Helper function to pick a random puzzle set from the database
 function selectRandomPuzzle() {
     const randomIndex = Math.floor(Math.random() * puzzleDatabase.length);
     currentPuzzle = puzzleDatabase[randomIndex].puzzle;
@@ -63,7 +56,6 @@ function createBoard(){
             cell.addEventListener("input", function () {
                 this.value = this.value.replace(/[^1-9]/g, "");
             });
-            // Reads from the dynamically selected random puzzle
             if(currentPuzzle[r][c] != 0){
                 cell.value = currentPuzzle[r][c];
                 cell.disabled = true;
@@ -100,14 +92,11 @@ function showSolution(){
         }
     }
 }
-
-// Generates a brand new random game setup when clicked
 function newGame(){
     selectRandomPuzzle(); 
     createBoard();
     document.getElementById("message").innerHTML = "";
 }
 
-// Initial game boot initialization
 selectRandomPuzzle();
 createBoard();
